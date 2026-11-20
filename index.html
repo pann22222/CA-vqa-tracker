@@ -42,7 +42,7 @@ h1{font-size:20px;font-weight:600;margin:0}
 .bar .t{display:flex;flex-direction:column;gap:3px;min-width:0}
 .bar .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
-.bar .fill{height:100%;background:var(--accent);border-radius:3px}
+.bar .fill{display:block;height:100%;background:var(--accent);border-radius:3px}
 .bar .c{text-align:right;font-weight:500}
 .bar:hover .n{text-decoration:underline}
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
@@ -124,7 +124,48 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
 
 .connect{max-width:560px;margin:60px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px}
 .connect h1{margin-bottom:8px}.connect p{color:var(--sub);margin:0 0 16px}.connect ol{color:var(--sub);padding-left:18px;margin:0 0 20px}
-.connect .row{display:flex;gap:8px;flex-wrap:wrap}</style>
+.connect .row{display:flex;gap:8px;flex-wrap:wrap}
+.wrap{max-width:none}
+.att{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:12px}
+.at{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;text-align:left}
+.at:hover{border-color:var(--line2)}.at.active{outline:2px solid var(--accent)}
+.atn{font-size:24px;font-weight:600;min-width:30px}.atl{font-size:12.5px;color:var(--sub)}.atl b{display:block;color:var(--ink);font-size:13.5px;font-weight:600}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px}
+.tabs{display:flex;background:var(--line);border-radius:8px;padding:3px}
+.tabs button{border:0;background:none;padding:6px 16px;border-radius:6px;cursor:pointer;color:var(--sub)}
+.tabs button.on{background:var(--card);color:var(--ink);font-weight:600}
+#q{border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:7px 10px;min-width:240px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px}
+.cl{font-size:12px;color:var(--mute);margin:0 2px 0 8px}.cl:first-child{margin-left:0}
+.chip{border:1px solid var(--line2);background:var(--card);border-radius:16px;padding:4px 11px;font-size:12.5px;cursor:pointer;display:inline-flex;gap:5px;align-items:center}
+.chip i{font-style:normal;color:var(--mute)}.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}.chip.on i{color:#dce6f2}
+@media (prefers-color-scheme: dark){.chip.on{color:#0d1620}}
+.tag{font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:4px;white-space:nowrap}
+.tag.CR{background:#b42318;color:#fff}.tag.MA{background:#fdf0d5;color:#8a4b00;border:1px solid #f0c27a}.tag.MI{background:#eceef1;color:#444b55;border:1px solid #d3d6db}
+.tag.stale{background:#fdecea;color:#b42318}.tag.wv{background:#ece9fc;color:#3c3489}
+.grp{display:flex;align-items:center;gap:10px;margin:6px 2px 8px;flex-wrap:wrap}
+.gtog{border:0;background:none;font-size:15px;font-weight:600;cursor:pointer;padding:0;color:var(--ink)}
+.board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(235px,1fr);gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px}
+.col{background:var(--line);border-radius:10px;padding:8px;min-height:120px}
+.col.over{outline:2px dashed var(--accent);outline-offset:-2px}
+.ch{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:13px;padding:2px 4px 8px}
+.ch i{font-style:normal;background:var(--card);border-radius:10px;padding:0 8px;font-weight:500;font-size:12px}
+.cempty{font-size:12px;color:var(--mute);text-align:center;padding:14px 4px}
+.kc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 10px;margin-bottom:8px;cursor:pointer}
+.kc:hover{border-color:var(--line2)}.kc.dragging{opacity:.4}
+.kt{display:flex;justify-content:space-between;align-items:center;gap:6px}.tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.kbody{display:flex;justify-content:space-between;gap:8px;margin-top:3px}
+.kp{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.km{font-size:12px;color:var(--sub)}
+.kth{width:40px;height:40px;border-radius:6px;object-fit:cover;background:var(--line);flex:none}
+.klu{margin-top:6px;border-top:1px dashed var(--line);padding-top:5px;font-size:12px}
+.ago{color:#b42318;font-weight:600}.agok{color:var(--mute)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:0}
+.twrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.tt{width:100%;border-collapse:collapse;font-size:13px}.tt th{text-align:left;font-weight:600;color:var(--sub);padding:9px 10px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+.tt td.id,.tt td:nth-child(2),.tt td:nth-child(8),.tt td:nth-child(9){white-space:nowrap}
+.tt td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}.tt tbody tr{cursor:pointer}.tt tbody tr:hover{background:var(--bg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}.kpi{cursor:default}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -158,27 +199,22 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
     </div>
   </header>
 
-  <section class="kpis" id="kpis"></section>
-  <section class="charts">
-    <div class="panel"><h3>By status</h3><div id="chStatus"></div></div>
-    <div class="panel"><h3>By supplier</h3><div id="chSupplier"></div></div>
-    <div class="panel"><h3>By defect type</h3><div id="chDefect"></div></div>
+  <section class="att" id="att"></section>
+  <section class="toolbar">
+    <div class="tabs" id="tabs" role="tablist"><button data-v="board">Board</button><button data-v="table">Table</button><button data-v="dash">Dashboard</button></div>
+    <input id="q" type="search" placeholder="Search part, P/N, supplier, notes">
   </section>
-
-  <section class="filters">
-    <input id="q" type="search" placeholder="Search part number, description, notes">
-    <select id="fStatus"><option value="">All statuses</option></select>
-    <select id="fSupplier"><option value="">All suppliers</option></select>
-    <select id="fProject"><option value="">All projects</option></select>
-    <select id="sort">
-      <option value="days">Sort: days open</option>
-      <option value="id">Sort: issue ID</option>
-      <option value="sev">Sort: severity</option>
-    </select>
-    <button class="chipclear" id="clearF">Clear filters</button>
+  <section class="chips" id="chips"></section>
+  <section id="vBoard"></section>
+  <section id="vTable" class="hidden"></section>
+  <section id="vDash" class="hidden">
+    <div class="kpis" id="kpis"></div>
+    <div class="charts">
+      <div class="panel"><h3>By status</h3><div id="chStatus"></div></div>
+      <div class="panel"><h3>Open issues by supplier</h3><div id="chSupplier"></div></div>
+      <div class="panel"><h3>Open issues by defect type</h3><div id="chDefect"></div></div>
+    </div>
   </section>
-
-  <section class="list" id="list"></section>
   </div>
 </div>
 
@@ -348,7 +384,7 @@ const CHOICES={
  actionOn:["Us","Supplier","Customer"],
  status:["New","Containment","Waiting for customer","Waiting for supplier 8D","Waiting for replacement","Verifying","Closed"]
 };
-const STATUS_COLOR={"New":["#eceef1","#444b55"],"Containment":["#fdf0d5","#7a4b00"],"Waiting for customer":["#ece9fc","#3c3489"],"Waiting for supplier 8D":["#fbe7df","#8a3415"],"Waiting for replacement":["#e3eefa","#0c447c"],"Verifying":["#dcf3ea","#085041"],"Closed":["#e4f1d6","#27500a"]};
+const STATUS_COLOR={"New":["#eceef1","#444b55"],"Containment":["#fdf0d5","#7a4b00"],"Waiting for customer":["#ece9fc","#3c3489"],"Waiting for supplier 8D":["#fbe7df","#8a3415"],"Waiting for replacement":["#e3eefa","#0c447c"],"Waiting for rework":["#fbeaf0","#72243e"],"Verifying":["#dcf3ea","#085041"],"Closed":["#e4f1d6","#27500a"]};
 const SECTIONS=[["tl","Timeline"],["basic","Basic info"],["photos","Photos"],["material","Material and supplier"],["defect","Defect details"],["cont","Containment and customer waiver"],["scar","Supplier corrective action (8D / SCAR)"],["track","Tracking"]];
 // key, Excel header, type, section  (order = Excel column order)
 const FIELDS=[
@@ -375,21 +411,37 @@ function ask(text){return new Promise(r=>{$("dlgText").textContent=text;$("dlg")
 function setSync(text,cls){const s=$("sync");s.textContent=text;s.className="sync "+(cls||"")}
 
 /* ---------- render ---------- */
+/* ---------- board / table / dashboard views ---------- */
+const STALE_DAYS=7;
+const SEV_SHORT={Critical:"CR",Major:"MA",Minor:"MI"};
+const ACT_DOT={Us:"#0c447c",Supplier:"#d85a30",Customer:"#7f77dd","":"#639922"};
+const NOCUST="(No customer)";
+const ls=(k,d)=>{try{return localStorage.getItem(k)||d}catch(e){return d}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+let view=ls("vqaView","board"), groupBy=ls("vqaGroup","customer"), custF="", sevF=new Set(), showClosed=false, tSort={k:"days",dir:-1};
+const collapsed=new Set();
+const withClosed=()=>showClosed||kpiFilter==="closed";
+const p2=n=>String(n).padStart(2,"0");
+function lastUpdate(i){
+  const m=lastLine(i).match(/^(\d{1,2})\/(\d{1,2})(?:\s*[–\-~]\s*(\d{1,2})\/(\d{1,2}))?/);
+  if(m){const mo=+(m[3]||m[1]),d=+(m[4]||m[2]);if(mo<1||mo>12||d<1||d>31)return i.dateFound||"";const now=new Date();let y=now.getFullYear();if(mo>now.getMonth()+2)y--;return `${y}-${p2(mo)}-${p2(d)}`}
+  return i.dateFound||"";
+}
+function daysSince(i){const lu=lastUpdate(i);return lu?dayDiff(lu,todayISO()):null}
+function stale(i){const d=daysSince(i);return isOpen(i)&&d!=null&&d>=STALE_DAYS}
+function mondayISO(){const d=new Date();const k=(d.getDay()+6)%7;d.setDate(d.getDate()-k);return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`}
+function thisWeek(i){const lu=lastUpdate(i);return !!lu&&lu>=mondayISO()&&lu<=todayISO()}
+const custOf=i=>i.customer||NOCUST;
+
 function filtered(){
-  const q=$("q").value.trim().toLowerCase(),fs=$("fStatus").value,fsu=$("fSupplier").value,fp=$("fProject").value;
-  let r=issues.filter(i=>{
-    if(fs&&i.status!==fs)return false;
-    if(fsu&&i.supplier!==fsu)return false;
-    if(fp&&i.project!==fp)return false;
-    if(kpiFilter==="open"&&!isOpen(i))return false;
+  const q=$("q").value.trim().toLowerCase();
+  return issues.filter(i=>{
+    if(custF&&custOf(i)!==custF)return false;
+    if(sevF.size&&!sevF.has(i.severity))return false;
     if(kpiFilter==="closed"&&isOpen(i))return false;
-    if(kpiFilter==="overdue"&&!overdue(i))return false;
-    if(kpiFilter==="waiver"&&!(i.waiver==="Requested"))return false;
+    if(kpiFilter==="open"&&!isOpen(i))return false;
     if(q){const hay=FIELDS.map(f=>i[f[0]]).join(" ").toLowerCase();if(!hay.includes(q))return false}
     return true});
-  const s=$("sort").value;
-  r.sort((a,b)=>s==="id"?String(a.id).localeCompare(String(b.id)):s==="sev"?((SEV_ORDER[a.severity]??9)-(SEV_ORDER[b.severity]??9)):((daysOpen(b)??-1)-(daysOpen(a)??-1)));
-  return r;
 }
 function bars(el,map,onClick){
   const arr=Object.entries(map).sort((a,b)=>b[1]-a[1]);const max=Math.max(1,...arr.map(a=>a[1]));
@@ -397,36 +449,122 @@ function bars(el,map,onClick){
   el.querySelectorAll(".bar").forEach(b=>b.onclick=()=>onClick(b.dataset.k));
 }
 function count(key,onlyOpen){const m={};issues.forEach(i=>{if(onlyOpen&&!isOpen(i))return;const k=i[key]||"(blank)";m[k]=(m[k]||0)+1});return m}
-function fillSelect(sel,vals,label){const cur=sel.value;sel.innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option${v===cur?" selected":""}>${esc(v)}</option>`).join("")}
-function render(){
-  const open=issues.filter(isOpen),closed=issues.length-open.length;
-  const od=issues.filter(overdue).length, wv=issues.filter(i=>i.waiver==="Requested").length;
-  const avg=open.length?Math.round(open.reduce((s,i)=>s+(daysOpen(i)||0),0)/open.length):0;
-  const K=[["all","Total issues",issues.length],["open","Open",open.length],["closed","Closed",closed],["overdue","8D overdue",od],["waiver","Waivers pending",wv]];
-  $("kpis").innerHTML=K.map(([k,l,v])=>`<button class="kpi${kpiFilter&&kpiFilter===k?" active":""}" data-k="${k}"><div class="l">${l}</div><div class="v"${k==="overdue"&&v?' style="color:var(--danger)"':""}>${v}</div></button>`).join("");
-  $("kpis").querySelectorAll(".kpi").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(!k)return;kpiFilter=(k==="all"||kpiFilter===k)?"":k;render()});
-  const st={};CHOICES.status.forEach(s=>{const n=issues.filter(i=>i.status===s).length;if(n)st[s]=n});
-  bars($("chStatus"),st,k=>{$("fStatus").value=k;render()});
-  bars($("chSupplier"),count("supplier",true),k=>{$("fSupplier").value=k;render()});
-  bars($("chDefect"),count("defectType",true),k=>{$("q").value=k;render()});
-  const uniq=k=>[...new Set([...CHOICES[k],...issues.map(i=>i[k]).filter(Boolean)])];
-  fillSelect($("fStatus"),CHOICES.status,"All statuses");fillSelect($("fSupplier"),uniq("supplier"),"All suppliers");fillSelect($("fProject"),uniq("project"),"All projects");
-  const r=filtered();
-  if(!issues.length){$("list").innerHTML=`<div class="empty">No issues in the Excel file yet. Add one with <b>+ New issue</b>.</div>`;return}
-  if(!r.length){$("list").innerHTML=`<div class="empty">No issues match these filters.</div>`;return}
-  $("list").innerHTML=r.map(i=>{const c=STATUS_COLOR[i.status]||["#eceef1","#444b55"];const d=daysOpen(i);const rt=rate(i);
-    return `<article class="issue" data-id="${esc(i.id)}">
-      <div class="top"><span class="id">${esc(i.id)}</span>${i.severity?`<span class="sev ${esc(i.severity)}">${esc(i.severity)}</span>`:""}${overdue(i)?'<span class="flag">8D overdue</span>':""}${i.waiver==="Requested"?'<span class="flag" style="color:#3c3489;background:#ece9fc">Waiver pending</span>':""}</div>
-      <div class="right">${(i.photos||[]).length?`<img class="cardthumb" data-photo="${esc(i.photos[0])}" alt="Photo of ${esc(i.id)}"><span class="pcount">${i.photos.length} photo${i.photos.length>1?"s":""}</span>`:""}<span class="pill" style="background:${c[0]};color:${c[1]}">${esc(i.status||"No status")}</span>${d!=null?`<span class="days">${d} day${d===1?"":"s"} ${isOpen(i)?"open":"to close"}</span>`:""}</div>
-      <div style="grid-column:1/-1"><span class="part">${esc(i.partDesc||"(no description)")}</span> <span class="id">${esc(i.partNo||"")}${i.custPartNo?" / "+esc(i.custPartNo):""}</span></div>
-      ${i.description?`<div class="desc">${esc(i.description)}</div>`:""}
-      <div class="meta">${i.project?`<span><b>${esc(i.project)}</b></span>`:""}${i.supplier?`<span>Supplier <b>${esc(i.supplier)}</b></span>`:""}${i.customer?`<span>Customer <b>${esc(i.customer)}</b></span>`:""}${i.defectType?`<span>${esc(i.defectType)}</span>`:""}${rt!=null?`<span>Defect rate <b>${Math.round(rt*1000)/10}%</b></span>`:""}${i.qtyHold?`<span>On hold <b>${(+i.qtyHold).toLocaleString()}</b></span>`:""}${i.containment?`<span>${esc(i.containment)}</span>`:""}</div>
-      ${lastLine(i)?`<div class="last">${esc(lastLine(i))}</div>`:""}
-    </article>`}).join("");
-  hydrate($("list"));$("list").querySelectorAll(".issue").forEach(el=>el.onclick=()=>openEditor(issues.find(i=>i.id===el.dataset.id)));
+
+function luHTML(i){
+  const l=lastLine(i);if(!l)return "";const m=l.match(/^(\S*\d\S*)\s+(.*)$/);const d=daysSince(i);
+  const ago=d==null?"":` <span class="${stale(i)?"ago":"agok"}">· ${d<=0?"today":d===1?"1 day ago":d+" days ago"}</span>`;
+  return `<div class="klu">${m?`<b>${esc(m[1])}</b> ${esc(trunc(m[2],65))}`:esc(trunc(l,65))}${ago}</div>`;
 }
-["q","fStatus","fSupplier","fProject","sort"].forEach(id=>$(id).addEventListener("input",render));
-$("clearF").onclick=()=>{["q","fStatus","fSupplier","fProject"].forEach(id=>$(id).value="");kpiFilter="";render()};
+function cardHTML(i){
+  const sv=SEV_SHORT[i.severity],a=actionOf(i),ph=(i.photos||[])[0];
+  return `<div class="kc" draggable="true" data-id="${esc(i.id)}">
+    <div class="kt"><span class="id">${esc(String(i.id).replace(/^VQA-\d{4}-/,""))}</span><span class="tags">${i.waiver==="Requested"?'<span class="tag wv">Waiver pending</span>':""}${overdue(i)?'<span class="tag stale">8D overdue</span>':""}${sv?`<span class="tag ${sv}" title="${esc(i.severity)}">${sv}</span>`:""}</span></div>
+    <div class="kbody"><div style="min-width:0"><div class="kp">${esc(i.partDesc||"(no description)")}</div>
+      <div class="km">${esc(i.partNo||"No P/N")}${i.supplier?" · "+esc(i.supplier):""}</div>
+      <div class="km"><span class="dot" style="background:${ACT_DOT[a]||ACT_DOT.Us}"></span>${a?"Action on: "+esc(a):"Closed"}</div></div>
+      ${ph?`<img class="kth" data-photo="${esc(ph)}" alt="Photo of ${esc(i.id)}">`:""}</div>
+    ${luHTML(i)}</div>`;
+}
+function boardCols(list){
+  const cols=CHOICES.status.filter(s=>s!=="Closed"||withClosed());
+  issues.forEach(i=>{if(i.status&&!cols.includes(i.status)&&(i.status!=="Closed"||withClosed()))cols.push(i.status)});
+  if(list.some(i=>!i.status))cols.unshift("");
+  return cols;
+}
+function renderBoard(list){
+  const el=$("vBoard");
+  const shown=list.filter(i=>i.status!=="Closed"||withClosed());
+  if(!issues.length){el.innerHTML=`<div class="empty">No issues in the Excel file yet. Add one with <b>+ New issue</b>.</div>`;return}
+  if(!shown.length){el.innerHTML=`<div class="empty">No issues match these filters.</div>`;return}
+  const cols=boardCols(shown);
+  const groups=groupBy==="customer"?[...new Set(shown.map(custOf))].sort((a,b)=>a===NOCUST?1:b===NOCUST?-1:a.localeCompare(b)):[null];
+  el.innerHTML=groups.map(g=>{
+    const gl=g==null?shown:shown.filter(i=>custOf(i)===g);const op=gl.filter(isOpen);
+    const sum=[`${op.length} open`,...["Us","Supplier","Customer"].map(a=>{const n=op.filter(i=>actionOf(i)===a).length;return n?`${n} waiting on ${a==="Us"?"us":a.toLowerCase()}`:""})].filter(Boolean).join(" · ");
+    const isC=g!=null&&collapsed.has(g);
+    return (g!=null?`<div class="grp"><button class="gtog" data-g="${esc(g)}" aria-expanded="${!isC}">${isC?"▸":"▾"} ${esc(g)}</button><span class="km">${sum}</span></div>`:"")+
+      (isC?"":`<div class="board">${cols.map(c=>{const cl=gl.filter(i=>(i.status||"")===c);
+        return `<div class="col" data-status="${esc(c)}"><div class="ch"><span>${esc(c||"No status")}</span><i>${cl.length}</i></div>${cl.map(cardHTML).join("")||'<div class="cempty">Drop a card here</div>'}</div>`}).join("")}</div>`);
+  }).join("");
+  hydrate(el);
+  el.querySelectorAll(".gtog").forEach(b=>b.onclick=()=>{const g=b.dataset.g;collapsed.has(g)?collapsed.delete(g):collapsed.add(g);render()});
+  el.querySelectorAll(".kc").forEach(c=>{
+    c.onclick=()=>openEditor(issues.find(i=>i.id===c.dataset.id));
+    c.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",c.dataset.id);e.dataTransfer.effectAllowed="move";c.classList.add("dragging")});
+    c.addEventListener("dragend",()=>c.classList.remove("dragging"));
+  });
+  el.querySelectorAll(".col").forEach(col=>{
+    col.addEventListener("dragover",e=>{e.preventDefault();col.classList.add("over")});
+    col.addEventListener("dragleave",()=>col.classList.remove("over"));
+    col.addEventListener("drop",e=>{e.preventDefault();col.classList.remove("over");const id=e.dataTransfer.getData("text/plain");if(id&&col.dataset.status)moveStatus(id,col.dataset.status)});
+  });
+}
+async function moveStatus(id,st){
+  const i=issues.find(x=>x.id===id);if(!i||i.status===st)return;
+  const o=Object.assign({},i,{status:st});if(st==="Closed"&&!o.closedDate)o.closedDate=todayISO();
+  const d=new Date();o.timeline=(String(o.timeline||"").trim()?String(o.timeline).trim()+"\n":"")+`${p2(d.getMonth()+1)}/${p2(d.getDate())} Status changed to ${st}`;
+  const ok=await commit(()=>{const ix=issues.findIndex(x=>x.id===id);if(ix>=0)issues[ix]=o});
+  render();toast(ok?`${id} moved to ${st}`:"Moved here, but not yet saved to Excel");
+}
+const TCOLS=[["id","ID"],["customer","Customer"],["partDesc","Part"],["partNo","P/N"],["supplier","Supplier"],["sev","Sev"],["status","Status"],["action","Action on"],["lu","Last update"],["days","Days open"]];
+function tval(i,k){if(k==="sev")return SEV_ORDER[i.severity]??9;if(k==="action")return actionOf(i);if(k==="lu")return lastUpdate(i);if(k==="days"){const d=daysOpen(i);return d==null?-1:d}return String(i[k]||"").toLowerCase()}
+function renderTable(list){
+  const el=$("vTable");list=list.filter(i=>isOpen(i)||withClosed());
+  if(!list.length){el.innerHTML=`<div class="empty">${issues.length?"No issues match these filters.":"No issues in the Excel file yet."}</div>`;return}
+  const r=[...list].sort((a,b)=>{const x=tval(a,tSort.k),y=tval(b,tSort.k);return (x<y?-1:x>y?1:0)*tSort.dir});
+  el.innerHTML=`<div class="twrap"><table class="tt"><thead><tr>${TCOLS.map(([k,l])=>`<th data-k="${k}">${l}${tSort.k===k?(tSort.dir>0?" ▲":" ▼"):""}</th>`).join("")}</tr></thead><tbody>${r.map(i=>{
+    const c=STATUS_COLOR[i.status]||["#eceef1","#444b55"],sv=SEV_SHORT[i.severity],lu=lastUpdate(i),ds=daysSince(i),d=daysOpen(i);
+    return `<tr data-id="${esc(i.id)}"><td class="id">${esc(i.id)}</td><td>${esc(i.customer||"")}</td><td>${esc(i.partDesc||"")}</td><td class="id">${esc(i.partNo||"")}</td><td>${esc(i.supplier||"")}</td>
+      <td>${sv?`<span class="tag ${sv}">${sv}</span>`:""}</td><td><span class="pill" style="background:${c[0]};color:${c[1]}">${esc(i.status||"—")}</span></td>
+      <td><span class="dot" style="background:${ACT_DOT[actionOf(i)]||ACT_DOT.Us}"></span>${esc(actionOf(i)||"Closed")}</td>
+      <td>${lu?`${md(lu)} <span class="${stale(i)?"ago":"agok"}">(${ds}d)</span>`:"—"}</td><td style="text-align:right">${d==null?"—":d}</td></tr>`}).join("")}</tbody></table></div>`;
+  el.querySelectorAll("th").forEach(th=>th.onclick=()=>{const k=th.dataset.k;tSort=tSort.k===k?{k,dir:-tSort.dir}:{k,dir:k==="days"||k==="lu"?-1:1};render()});
+  el.querySelectorAll("tbody tr").forEach(tr=>tr.onclick=()=>openEditor(issues.find(i=>i.id===tr.dataset.id)));
+}
+function renderDash(){
+  const open=issues.filter(isOpen);
+  const K=[["Total issues",issues.length],["Open",open.length],["Closed",issues.length-open.length],["8D overdue",issues.filter(overdue).length]];
+  $("kpis").innerHTML=K.map(([l,v])=>`<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div></div>`).join("");
+  const st={};[...CHOICES.status,...new Set(issues.map(i=>i.status).filter(Boolean))].forEach(s=>{if(st[s]!=null)return;const n=issues.filter(i=>i.status===s).length;if(n)st[s]=n});
+  bars($("chStatus"),st,()=>{});
+  bars($("chSupplier"),count("supplier",true),k=>{$("q").value=k==="(blank)"?"":k;view="board";render()});
+  bars($("chDefect"),count("defectType",true),k=>{$("q").value=k==="(blank)"?"":k;view="board";render()});
+}
+function render(){
+  const open=issues.filter(isOpen);
+  const closedN=issues.length-open.length,sevN=v=>open.filter(i=>i.severity===v).length;
+  const A=[["open","Open issues",open.length,"#1f4e78","",!sevF.size&&!kpiFilter],
+           ["Critical","Critical",sevN("Critical"),"#b42318","CR",sevF.has("Critical")],
+           ["Major","Major",sevN("Major"),"#b26a00","MA",sevF.has("Major")],
+           ["Minor","Minor",sevN("Minor"),"#5b6370","MI",sevF.has("Minor")],
+           ["closed","Closed",closedN,"#27500a","",kpiFilter==="closed"]];
+  $("att").innerHTML=A.map(([k,t,n,c,tg,on])=>`<button class="at${on?" active":""}" data-k="${k}"><span class="atn" style="color:${c}">${n}</span><span class="atl"><b>${tg?`<span class="tag ${tg}">${tg}</span> `:""}${t}</b>${k==="open"?"Show all open":k==="closed"?"Show closed issues":"Open issues"}</span></button>`).join("");
+  $("att").querySelectorAll(".at").forEach(b=>b.onclick=()=>{const k=b.dataset.k;
+    if(k==="open"){sevF.clear();kpiFilter=""}
+    else if(k==="closed"){kpiFilter=kpiFilter==="closed"?"":"closed";sevF.clear()}
+    else{const only=sevF.size===1&&sevF.has(k);sevF.clear();if(!only)sevF.add(k);if(kpiFilter==="closed")kpiFilter=""}
+    render()});
+  $("tabs").querySelectorAll("button").forEach(b=>{b.classList.toggle("on",b.dataset.v===view);b.onclick=()=>{view=b.dataset.v;lsSet("vqaView",view);render()}});
+  // chips
+  const custs=[...new Set(issues.map(custOf))].sort((a,b)=>a===NOCUST?1:b===NOCUST?-1:a.localeCompare(b));
+  const cn=c=>issues.filter(i=>custOf(i)===c&&(isOpen(i)||showClosed)).length;
+  const anyF=custF||sevF.size||kpiFilter||$("q").value;
+  $("chips").innerHTML=
+    `<span class="cl" style="margin-left:0">Customer</span><button class="chip${!custF?" on":""}" data-c="">All</button>${custs.map(c=>`<button class="chip${custF===c?" on":""}" data-c="${esc(c)}">${esc(c)} <i>${cn(c)}</i></button>`).join("")}`+
+    (view==="board"?`<span class="cl">Group rows</span><button class="chip${groupBy==="customer"?" on":""}" data-gb="customer">By customer</button><button class="chip${groupBy!=="customer"?" on":""}" data-gb="none">None</button>`:"")+
+    (view!=="dash"?`<button class="chip${showClosed?" on":""}" id="closedT">Show closed</button>`:"")+
+    (anyF?`<button class="chipclear" id="clearF">Clear filters</button>`:"");
+  $("chips").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{custF=b.dataset.c;render()});
+  $("chips").querySelectorAll("[data-gb]").forEach(b=>b.onclick=()=>{groupBy=b.dataset.gb;lsSet("vqaGroup",groupBy);render()});
+  if($("closedT"))$("closedT").onclick=()=>{showClosed=!showClosed;render()};
+  if($("clearF"))$("clearF").onclick=()=>{custF="";sevF.clear();kpiFilter="";$("q").value="";render()};
+  ["vBoard","vTable","vDash"].forEach(id=>$(id).classList.add("hidden"));
+  const list=filtered();
+  if(view==="table"){$("vTable").classList.remove("hidden");renderTable(list)}
+  else if(view==="dash"){$("vDash").classList.remove("hidden");renderDash()}
+  else{$("vBoard").classList.remove("hidden");renderBoard(list)}
+}
+$("q").addEventListener("input",()=>{clearTimeout(render.t);render.t=setTimeout(render,150)});
 
 
 /* ---------- editor ---------- */
