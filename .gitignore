@@ -1,0 +1,11 @@
+# keep tracker data out of this repo
+*.xlsx
+*.xls
+*.pptx
+*.jpg
+*.jpeg
+*.png
+*.heic
+photos/
+reports/
+backups/
