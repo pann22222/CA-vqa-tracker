@@ -2,7 +2,7 @@
 
 A single-page issue tracker that works directly with an Excel file on your own computer.
 
-**Open it:** https://pann22222.github.io/ca-vqa-tracker/ (Chrome or Edge on a computer)
+**Open it:** https://pann22222.github.io/CA-vqa-tracker/ (Chrome or Edge on a computer)
 
 ## How it works
 - Click **Choose tracker folder** and pick the folder that holds your tracker Excel (a workbook with a `VQA Issues` sheet).
