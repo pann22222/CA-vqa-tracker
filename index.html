@@ -104,7 +104,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
 .sum .kv span{display:block;font-size:11px;color:var(--sub)}
 .sum .kv b{font-weight:600;font-size:14px}
 
-.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-bottom:10px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:10px}
 .th{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--line);border:1px solid var(--line)}
 .th img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
 .th .x{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;cursor:pointer;font-size:14px;line-height:24px;padding:0}
@@ -385,7 +385,7 @@ const CHOICES={
  status:["New","Waiting for rework","Waiting for customer","Waiting for supplier 8D","Waiting for replacement","Verifying","Closed"]
 };
 const STATUS_COLOR={"New":["#eceef1","#444b55"],"Containment":["#fdf0d5","#7a4b00"],"Waiting for customer":["#ece9fc","#3c3489"],"Waiting for supplier 8D":["#fbe7df","#8a3415"],"Waiting for replacement":["#e3eefa","#0c447c"],"Waiting for rework":["#fbeaf0","#72243e"],"Verifying":["#dcf3ea","#085041"],"Closed":["#e4f1d6","#27500a"]};
-const SECTIONS=[["tl","Timeline"],["basic","Basic info"],["photos","Photos"],["material","Material and supplier"],["defect","Defect details"],["cont","Containment and customer waiver"],["scar","Supplier corrective action (8D / SCAR)"],["track","Tracking"]];
+const SECTIONS=[["photos","Photos"],["tl","Timeline"],["basic","Basic info"],["material","Material and supplier"],["defect","Defect details"],["cont","Containment and customer waiver"],["scar","Supplier corrective action (8D / SCAR)"],["track","Tracking"]];
 // key, Excel header, type, section  (order = Excel column order)
 const FIELDS=[
  ["id","Issue ID","text","basic"],["project","Project / Model","list","basic"],["stage","Stage","list","basic"],["dateFound","Date found","date","basic"],["reportedBy","Reported by","text","basic"],["foundAt","Found at","select","basic"],["site","Site / Line","select","basic"],
