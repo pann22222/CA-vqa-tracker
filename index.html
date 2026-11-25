@@ -844,7 +844,6 @@ function buildDeck(PG,list,opts,assets){
     s.addShape(pres.shapes.RECTANGLE,{x:6.15,y:0.79,w:1.75,h:0.3,fill:{color:c[0]},line:{color:c[0]}});
     tb(s,a?"● Action on: "+a:"● Closed",{x:6.15,y:0.79,w:1.75,h:0.3,fontSize:9.5,bold:true,color:c[1],align:"center",valign:"middle"});
     const d=daysOpen(i),late=isOpen(i)&&((i.nextDue&&i.nextDue<today)||overdue(i));
-    tb(s,d==null?"":isOpen(i)?(late?"Overdue · ":"")+`${d} days open`:`Closed in ${d} days`,{x:7.95,y:0.79,w:1.65,h:0.3,fontSize:9.5,bold:true,color:late||d>=30?RED:SUB,align:"right",valign:"middle"});
     const info=[["Customer",i.customer],["Vendor",i.supplier],["P/N",[i.partNo,i.custPartNo].filter(Boolean).join(" / ")],["Model",i.project]];
     tb(s,info.flatMap(([k,v],n)=>[{text:k+" ",options:{color:SUB}},{text:(v||"–")+(n<info.length-1?"     ":""),options:{bold:true,color:INK}}]),{x:0.4,y:1.2,w:9.2,h:0.26,fontSize:10,valign:"middle",fit:"shrink"});
     s.addShape(pres.shapes.LINE,{x:0.4,y:1.5,w:9.2,h:0,line:{color:LINE,width:0.75}});
