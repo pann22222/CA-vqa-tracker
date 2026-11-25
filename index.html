@@ -240,7 +240,8 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
     <label><input type="radio" name="expScope" value="filtered"> Only issues shown with current filters</label>
     <label style="margin-top:4px"><input type="checkbox" id="expDetail" checked> Add a detail slide for each issue</label>
   </div>
-  <p class="days" style="margin:0 0 12px">Saved as a PowerPoint in the "reports" folder. Add a file named logo.png to your tracker folder to show your logo.</p>
+  <label style="display:block;font-size:14px;margin-bottom:10px"><input type="checkbox" id="expSave"> Also save a copy in the tracker's "reports" folder</label>
+  <p class="days" style="margin:0 0 12px">The PowerPoint downloads to your computer (usually the Downloads folder). Add a file named logo.png to your tracker folder to show your logo.</p>
   <p class="err" id="expErr" style="margin:0 0 10px"></p>
   <div class="row"><button class="btn" id="expCancel">Cancel</button><button class="btn primary" id="expGo">Export</button></div>
 </div></div>
@@ -880,9 +881,12 @@ async function exportDeck(list,opts){
   const pres=buildDeck(PptxGenJS,list,opts,await loadAssets(list));
   const buf=await pres.write({outputType:"arraybuffer"});
   const name=`CA_Issue_Report_${opts.week.replace(/[^A-Za-z0-9_-]/g,"")}_${opts.tag||todayISO()}.pptx`;
-  try{const r=await dirH.getDirectoryHandle("reports",{create:true});const h=await r.getFileHandle(name,{create:true});const w=await h.createWritable();await w.write(buf);await w.close();
-    toast(`Saved reports/${name}`);return true}
-  catch(e){console.error(e);try{const url=URL.createObjectURL(new Blob([buf]));const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);toast("Couldn't write to the reports folder, so it was downloaded instead (is the file open in PowerPoint?)");return true}catch(e2){toast("Couldn't save the PowerPoint.");return false}}
+  try{
+    const url=URL.createObjectURL(new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"}));
+    const el=document.createElement("a");el.href=url;el.download=name;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
+  }catch(e){console.error(e);toast("Couldn't download the PowerPoint.");return false}
+  if(opts.saveCopy&&dirH){try{const r=await dirH.getDirectoryHandle("reports",{create:true});const h=await r.getFileHandle(name,{create:true});const w=await h.createWritable();await w.write(buf);await w.close()}catch(e){console.error(e);toast(`Downloaded ${name}, but couldn't also save a copy in "reports".`);return true}}
+  toast(`Downloaded ${name}${opts.saveCopy?' (copy also saved in "reports")':""}`);return true
 }
 function weekDefault(){try{return localStorage.getItem("vqaWeek")||"WK"+isoWeek()}catch(e){return "WK"+isoWeek()}}
 $("expBtn").onclick=()=>{$("expWeek").value=weekDefault();$("expErr").textContent="";$("expDlg").classList.add("open")};
@@ -894,7 +898,7 @@ $("expGo").onclick=async()=>{
   const list=(scope==="open"?issues.filter(isOpen):filtered()).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
   if(!list.length){$("expErr").textContent="No issues to export.";return}
   $("expGo").disabled=true;$("expGo").textContent="Exporting…";
-  const ok=await exportDeck(list,{week,summary:true,detail:$("expDetail").checked});
+  const ok=await exportDeck(list,{week,summary:true,detail:$("expDetail").checked,saveCopy:$("expSave").checked});
   $("expGo").disabled=false;$("expGo").textContent="Export";if(ok)$("expDlg").classList.remove("open");
 };
 $("expOneBtn").onclick=async()=>{
