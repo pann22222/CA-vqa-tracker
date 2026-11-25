@@ -239,6 +239,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
   <div style="display:grid;gap:6px;margin-bottom:12px;font-size:14px">
     <label><input type="radio" name="expScope" value="open" checked> All open issues</label>
     <label><input type="radio" name="expScope" value="filtered"> Only issues shown with current filters</label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:14px" class="sevpick"><span class="days" style="margin:0">Severity:</span><label><input type="checkbox" name="expSev" value="Critical" checked> <span class="tag CR">CR</span> Critical</label><label><input type="checkbox" name="expSev" value="Major" checked> <span class="tag MA">MA</span> Major</label><label><input type="checkbox" name="expSev" value="Minor" checked> <span class="tag MI">MI</span> Minor</label><label><input type="checkbox" name="expSev" value="" checked> Not set</label></div>
     <label style="margin-top:4px"><input type="checkbox" id="expDetail" checked> Add a detail slide for each issue</label>
   </div>
   <label style="display:block;font-size:14px;margin-bottom:10px"><input type="checkbox" id="expSave"> Also save a copy in the tracker's "reports" folder</label>
@@ -251,6 +252,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
   <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-size:14px">
     <label><input type="radio" name="txtScope" value="open" checked> All open issues</label>
     <label><input type="radio" name="txtScope" value="filtered"> Only issues shown now</label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:14px" class="sevpick"><span class="days" style="margin:0">Severity:</span><label><input type="checkbox" name="txtSev" value="Critical" checked> <span class="tag CR">CR</span> Critical</label><label><input type="checkbox" name="txtSev" value="Major" checked> <span class="tag MA">MA</span> Major</label><label><input type="checkbox" name="txtSev" value="Minor" checked> <span class="tag MI">MI</span> Minor</label><label><input type="checkbox" name="txtSev" value="" checked> Not set</label></div>
     <label>Week <input id="txtWeek" style="width:80px;border:1px solid var(--line2);border-radius:6px;padding:4px 6px;background:var(--card)"></label>
   </div>
   <textarea id="txtOut" style="width:100%;min-height:300px;border:1px solid var(--line2);border-radius:8px;padding:10px;font:13px/1.55 inherit;background:var(--card)" aria-label="Summary text"></textarea>
@@ -907,8 +909,8 @@ $("expGo").onclick=async()=>{
   const week=$("expWeek").value.trim();if(!week){$("expErr").textContent="Enter a week label, for example WK47.";return}
   try{localStorage.setItem("vqaWeek",week)}catch(e){}
   const scope=document.querySelector('input[name="expScope"]:checked').value;
-  const list=(scope==="open"?issues.filter(isOpen):filtered()).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
-  if(!list.length){$("expErr").textContent="No issues to export.";return}
+  const list=bySev((scope==="open"?issues.filter(isOpen):filtered()),"expSev").sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+  if(!list.length){$("expErr").textContent="No issues match. Tick at least one severity, or change the scope.";return}
   $("expGo").disabled=true;$("expGo").textContent="Exporting…";
   const ok=await exportDeck(list,{week,summary:true,detail:$("expDetail").checked,saveCopy:$("expSave").checked});
   $("expGo").disabled=false;$("expGo").textContent="Export";if(ok)$("expDlg").classList.remove("open");
@@ -932,12 +934,13 @@ function sentence(i){
 }
 function buildSummaryText(){
   const scope=document.querySelector('input[name="txtScope"]:checked').value;
-  const list=(scope==="open"?issues.filter(isOpen):filtered()).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+  const list=bySev((scope==="open"?issues.filter(isOpen):filtered()),"txtSev").sort((a,b)=>String(a.id).localeCompare(String(b.id)));
   const week=$("txtWeek").value.trim();
   if(!list.length)return "No issues to summarize.";
   const byC={};list.forEach(i=>{(byC[custOf(i)]=byC[custOf(i)]||[]).push(i)});
   const open=list.filter(isOpen).length;
-  let out=`CA issue summary${week?" – "+week:""} (${md(todayISO())}) · ${open} open${list.length>open?`, ${list.length-open} closed`:""}\n`;
+  const sevOn=[...document.querySelectorAll('input[name="txtSev"]:checked')].map(c=>c.value||"Not set");
+  let out=`CA issue summary${week?" – "+week:""} (${md(todayISO())}) · ${open} open${list.length>open?`, ${list.length-open} closed`:""}${sevOn.length<4?` · ${sevOn.join(" / ")} only`:""}\n`;
   Object.keys(byC).sort().forEach(c=>{out+=`\n${c}\n`+byC[c].map(i=>"• "+sentence(i)).join("\n")+"\n"});
   return out.trim()+"\n";
 }
@@ -948,6 +951,9 @@ $("txtWeek").oninput=refreshTxt;
 $("txtClose").onclick=()=>$("txtDlg").classList.remove("open");
 $("txtCopy").onclick=async()=>{const t=$("txtOut").value;try{await navigator.clipboard.writeText(t);$("txtMsg").textContent="";toast("Summary copied")}catch(e){$("txtOut").select();try{document.execCommand("copy");toast("Summary copied")}catch(e2){$("txtMsg").textContent="Couldn't copy. Select the text and press Ctrl+C."}}};
 $("txtDl").onclick=()=>{const url=URL.createObjectURL(new Blob(["\ufeff"+$("txtOut").value.replace(/\n/g,"\r\n")],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download=`CA_Issue_Summary_${($("txtWeek").value||"").replace(/[^A-Za-z0-9_-]/g,"")||"week"}_${todayISO()}.txt`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);toast("Summary downloaded")};
+
+function bySev(list,name){const on=[...document.querySelectorAll(`input[name="${name}"]:checked`)].map(c=>c.value);return list.filter(i=>on.includes(SEV_SHORT[i.severity]?i.severity:""))}
+document.querySelectorAll('input[name="txtSev"]').forEach(c=>c.onchange=()=>refreshTxt());
 </script>
 </body>
 </html>
