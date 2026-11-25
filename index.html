@@ -197,6 +197,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
       <button class="btn primary" id="newBtn">+ New issue</button>
       <button class="btn hidden" id="retryBtn" style="color:var(--danger)">Retry save</button>
       <button class="btn" id="expBtn">Export slides</button>
+      <button class="btn" id="txtBtn">Text summary</button>
       <button class="btn" id="reloadBtn">Reload from Excel</button>
       <button class="btn" id="changeBtn">Change folder</button>
     </div>
@@ -244,6 +245,17 @@ details summary{cursor:pointer;font-size:12px;color:var(--sub);margin-top:8px}
   <p class="days" style="margin:0 0 12px">The PowerPoint downloads to your computer (usually the Downloads folder). Add a file named logo.png to your tracker folder to show your logo.</p>
   <p class="err" id="expErr" style="margin:0 0 10px"></p>
   <div class="row"><button class="btn" id="expCancel">Cancel</button><button class="btn primary" id="expGo">Export</button></div>
+</div></div>
+<div class="dialog" id="txtDlg"><div class="box" style="max-width:760px">
+  <h3 style="margin:0 0 10px;font-size:16px">Text summary</h3>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-size:14px">
+    <label><input type="radio" name="txtScope" value="open" checked> All open issues</label>
+    <label><input type="radio" name="txtScope" value="filtered"> Only issues shown now</label>
+    <label>Week <input id="txtWeek" style="width:80px;border:1px solid var(--line2);border-radius:6px;padding:4px 6px;background:var(--card)"></label>
+  </div>
+  <textarea id="txtOut" style="width:100%;min-height:300px;border:1px solid var(--line2);border-radius:8px;padding:10px;font:13px/1.55 inherit;background:var(--card)" aria-label="Summary text"></textarea>
+  <p class="days" style="margin:6px 0 12px">One sentence per issue. You can edit the text here before copying.</p>
+  <div class="row"><span class="err" id="txtMsg" style="margin-right:auto;align-self:center"></span><button class="btn" id="txtClose">Close</button><button class="btn" id="txtDl">Download .txt</button><button class="btn primary" id="txtCopy">Copy</button></div>
 </div></div>
 <div class="msg" id="msg"></div>
 <div class="lb" id="lb"><img id="lbImg" alt="Issue photo, enlarged"></div>
@@ -906,6 +918,36 @@ $("expOneBtn").onclick=async()=>{
   if(!o.id){$("formErr").textContent="Enter an issue ID first.";return}
   $("expOneBtn").disabled=true;await exportDeck([o],{week:weekDefault(),summary:false,detail:true,tag:o.id});$("expOneBtn").disabled=false;
 };
+
+/* ---------- one-sentence text summary ---------- */
+function sentence(i){
+  const sv=i.severity?` · ${i.severity}`:"";
+  const head=`${String(i.id).replace(/^VQA-\d{4}-/,"")} ${trunc(i.partDesc||"Issue",30)} (${[i.partNo,i.supplier].filter(Boolean).join(" · ")||"no P/N"}${sv})`;
+  const l=lastLine(i);const m=l.match(/^(\S*\d\S*)\s+(.*)$/);
+  const latest=trunc((m?m[2]:l).replace(/[.;\s]+$/,""),110), when=m?m[1]:"";
+  const what=trunc(String(i.description||"").split(/(?<=[.;])\s/)[0].replace(/[.;:\s]+$/,""),80);
+  const st=i.status||"No status";
+  let t=`${head} – ${what||"No description"}; ${st}`+(latest?` (latest ${when?when+": ":""}${latest})`:"");
+  return /[….)]$/.test(t)&&!t.endsWith(")")?t:t+".";
+}
+function buildSummaryText(){
+  const scope=document.querySelector('input[name="txtScope"]:checked').value;
+  const list=(scope==="open"?issues.filter(isOpen):filtered()).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+  const week=$("txtWeek").value.trim();
+  if(!list.length)return "No issues to summarize.";
+  const byC={};list.forEach(i=>{(byC[custOf(i)]=byC[custOf(i)]||[]).push(i)});
+  const open=list.filter(isOpen).length;
+  let out=`CA issue summary${week?" – "+week:""} (${md(todayISO())}) · ${open} open${list.length>open?`, ${list.length-open} closed`:""}\n`;
+  Object.keys(byC).sort().forEach(c=>{out+=`\n${c}\n`+byC[c].map(i=>"• "+sentence(i)).join("\n")+"\n"});
+  return out.trim()+"\n";
+}
+function refreshTxt(){$("txtOut").value=buildSummaryText();$("txtMsg").textContent=""}
+$("txtBtn").onclick=()=>{$("txtWeek").value=weekDefault();refreshTxt();$("txtDlg").classList.add("open")};
+document.querySelectorAll('input[name="txtScope"]').forEach(r=>r.onchange=refreshTxt);
+$("txtWeek").oninput=refreshTxt;
+$("txtClose").onclick=()=>$("txtDlg").classList.remove("open");
+$("txtCopy").onclick=async()=>{const t=$("txtOut").value;try{await navigator.clipboard.writeText(t);$("txtMsg").textContent="";toast("Summary copied")}catch(e){$("txtOut").select();try{document.execCommand("copy");toast("Summary copied")}catch(e2){$("txtMsg").textContent="Couldn't copy. Select the text and press Ctrl+C."}}};
+$("txtDl").onclick=()=>{const url=URL.createObjectURL(new Blob(["\ufeff"+$("txtOut").value.replace(/\n/g,"\r\n")],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download=`CA_Issue_Summary_${($("txtWeek").value||"").replace(/[^A-Za-z0-9_-]/g,"")||"week"}_${todayISO()}.txt`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);toast("Summary downloaded")};
 </script>
 </body>
 </html>
